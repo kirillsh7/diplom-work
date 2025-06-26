@@ -1,0 +1,60 @@
+{
+	"users":[
+		{
+			"id": "001",
+      "login": "admin",
+      "password": "rewq123",
+      "registered_at": "2022-01-01",
+      "role_id": 0,
+			"icon":"url"
+		}
+	],
+	"roles": [
+    {
+      "id": "0",
+      "name": "Администратор"
+    },
+    {
+      "id": "1",
+      "name": "Модератор"
+    },
+    {
+      "id": "2",
+      "name": "Читатель"
+    },
+    {
+      "id": "3",
+      "name": "Гость"
+    }
+  ],
+	"cataegory":{
+		"user_id":[
+			{
+			
+			"category_name": "TestName",
+			"cataegory_type": true
+		}
+	]
+	},
+	"client_account":{
+		"user_id":[
+			{
+					"name":"Client account name",
+					"amount": 123124124,
+					"data_added":"2025-07-03",
+					"icon":"icon_name"
+			}
+		]
+	},
+	"operation_client":{
+		"user_id":[
+			{
+				"operation_name":"name",
+				"created_data":"2024-03-11",
+				"commentary": "Title...",
+				"operation_category": "category[user_id].name"
+			}
+		]
+
+	}
+}

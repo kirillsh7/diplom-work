@@ -1,0 +1,25 @@
+.header{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	margin: 5px 0 50px 0;
+
+	border: 2px solid silver;
+	line-height: 1.5rem;
+	font-size: 1.2rem;
+	border-radius: 10px;
+	padding: 10px 45px;
+
+}
+.list{
+	display: flex;
+	gap: 20px;
+}	
+
+.button{
+	padding: 5px 15px;
+	background-color: silver;
+	border: 1px solid silver;
+	border-radius: 5px;
+}
