@@ -1,22 +1,19 @@
-import { Link } from 'react-router-dom'
 import styled from './header.module.css'
+import { MenuLink } from './components/MenuLink/MenuLink'
+import { MenuLogout } from './components/MenuLogout/MenuLogout'
 export const Header = () => {
 	return (
 		<header className={styled.header}>
 			<nav>
 				<ul className={styled.list}>
-					<li><Link to={'/'}>Главная</Link></li>
-					<li><Link to={'/client-account'}>Счета</Link></li>
-					<li><Link to={'/category'}>Категории</Link></li>
-					<li><Link to={'/operation'}>Oперации</Link></li>
-					<li><Link to={'/history-operation'}>История операции</Link></li>
+					<MenuLink to={'/'}>Главная</MenuLink>
+					<MenuLink to={'/client-account'}>Счета</MenuLink>
+					<MenuLink to={'/category'}>Категории</MenuLink>
+					<MenuLink to={'/operation'}>Операции</MenuLink>
+					<MenuLink to={'/history-operation'}>История операции</MenuLink>
 				</ul>
 			</nav>
-			<div>
-				<button className={styled.button}>
-					<Link to={'/login'}>Войти</Link>
-				</button>
-			</div>
+			<MenuLogout />
 		</header>
 	)
 }

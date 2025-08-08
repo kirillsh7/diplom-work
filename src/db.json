@@ -1,60 +1,54 @@
 {
-	"users":[
+	"users": [
 		{
-			"id": "001",
-      "login": "admin",
-      "password": "rewq123",
-      "registered_at": "2022-01-01",
-      "role_id": 0,
-			"icon":"url"
+			"id": "9e0a",
+			"login": "kirill@mail.ru",
+			"password": "qwer1234",
+			"registered_at": "2050-09-17 12:18"
 		}
 	],
-	"roles": [
-    {
-      "id": "0",
-      "name": "Администратор"
-    },
-    {
-      "id": "1",
-      "name": "Модератор"
-    },
-    {
-      "id": "2",
-      "name": "Читатель"
-    },
-    {
-      "id": "3",
-      "name": "Гость"
-    }
-  ],
-	"cataegory":{
-		"user_id":[
-			{
-			
-			"category_name": "TestName",
-			"cataegory_type": true
+	"category": [
+		{
+			"id": "eaed",
+			"name": "магазин",
+			"type": 0,
+			"user": "kirill@mail.ru"
+		},
+		{
+			"id": "44dc",
+			"name": "playstation 5",
+			"type": 0,
+			"user": "kirill@mail.ru"
+		}
+	],
+	"client-account": [
+		{
+			"id": "50ed",
+			"name": "основная",
+			"type": "кредитная карта ",
+			"amount": 10000,
+			"created_date": "2025-08-04",
+			"user": "kirill@mail.ru"
+		},
+		{
+			"id": "5954",
+			"name": "мастер какрд",
+			"type": "3290534",
+			"amount": 211124,
+			"created_date": "2025-08-04",
+			"user": "kirill@mail.ru"
+		}
+	],
+	"operation-client": [
+		{
+			"operation_name": "name",
+			"created_date": "2024-03-11",
+			"amount": 1000,
+			"comment": "Title...",
+			"category": "category[user_id].name",
+			"client_account": "client-account[user_id].name",
+			"user": "kirill@mail.ru",
+			"id": "268b"
 		}
 	]
-	},
-	"client_account":{
-		"user_id":[
-			{
-					"name":"Client account name",
-					"amount": 123124124,
-					"data_added":"2025-07-03",
-					"icon":"icon_name"
-			}
-		]
-	},
-	"operation_client":{
-		"user_id":[
-			{
-				"operation_name":"name",
-				"created_data":"2024-03-11",
-				"commentary": "Title...",
-				"operation_category": "category[user_id].name"
-			}
-		]
-
-	}
 }

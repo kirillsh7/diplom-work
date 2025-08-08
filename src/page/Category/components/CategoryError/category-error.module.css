@@ -1,0 +1,33 @@
+.errorNotification {
+	margin: 15px 0;
+	padding: 12px 20px;
+	background-color: #ffebee;
+	border-left: 4px solid #f44336;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	animation: fadeIn 0.3s ease-out;
+	width: max-content;
+}
+
+.errorContent {
+	display: flex;
+	align-items: center;
+	width: max-content;
+}
+
+.closeButton {
+	background: none;
+	border: none;
+	color: #d32f2f;
+	font-size: 20px;
+	cursor: pointer;
+	margin-left: 15px;
+	padding: 0;
+	line-height: 1;
+}
+
+.closeButton:hover {
+	opacity: 0.8;
+}

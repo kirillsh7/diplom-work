@@ -1,0 +1,41 @@
+import { transformClientAcount } from './transformers'
+import { BASE_URL } from '../constants'
+export const apiClientAccount = {
+	GET: async (user = '') => {
+		try {
+			const response = await fetch(`${BASE_URL}/client-account?user=${user}`)
+			if (!response.ok) throw new Error(response.statusText)
+			const data = await response.json()
+			return data.map(el => transformClientAcount(el))
+		} catch (e) {
+			console.log(e)
+		}
+	},
+	POST: async data => {
+		try {
+			const response = await fetch(`${BASE_URL}/client-account`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				body: JSON.stringify(data),
+			})
+			if (!response.ok) throw new Error(response.statusText)
+			const newData = await response.json()
+			return transformClientAcount(newData)
+		} catch (e) {
+			console.log(e)
+		}
+	},
+	DELETE: async id => {
+		try {
+			const response = await fetch(`${BASE_URL}/client-account/${id}`, {
+				method: 'DELETE',
+			})
+			if (!response.ok) throw new Error(response.statusText)
+			return id
+		} catch (e) {
+			console.log(e)
+		}
+	},
+}

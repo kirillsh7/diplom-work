@@ -1,5 +1,3 @@
 export * from './Header/Header'
-export * from './ProtectedRoute/ProtectedRoute'
 export * from './Error/Error'
-export * from './Login/Login'
-export * from './Register/Register'
+export * from './Modal/Modal'
