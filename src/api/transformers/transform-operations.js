@@ -1,6 +1,6 @@
 export const transformOperation = dbOperations => {
 	return {
-		name: dbOperations.operation_name,
+		name: dbOperations.name,
 		amount: dbOperations.amount,
 		date: dbOperations.created_date,
 		comment: dbOperations.comment,

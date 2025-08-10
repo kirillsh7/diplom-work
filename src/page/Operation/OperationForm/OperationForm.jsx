@@ -1,52 +1,76 @@
-import { useEffect, useState } from 'react'
-import { useChangeInput } from '../../../hooks/useChangeInput'
 import styled from '../operation.module.css'
-import { IoMdClose } from 'react-icons/io'
+import { apiOperations } from '../../../api/apiOperations'
+import { getNameById } from '../../../utils/getNameById'
+import { useEffect, useState } from 'react'
 import { apiCategory } from '../../../api/apiCategory'
 import { apiClientAccount } from '../../../api/apiClientAccount'
-export const OperationForm = ({ closeOperationForm }) => {
+import { useChangeInput } from '../../../hooks/useChangeInput'
+export const OperationForm = ({ getOperation, closeOperationForm, user }) => {
 	const [newOperation, setNewOperation] = useState({
+		category: '',
+		client_account: '',
+		name: '',
 		amount: '',
-		categories: '',
-		account: '',
 		comment: '',
 	})
 	const [categories, setCategories] = useState([])
 	const [accounts, setAccounts] = useState([])
 	const handleInput = useChangeInput(setNewOperation)
 
-	const handleOverlayClick = e => {
-		if (e.target !== e.currentTarget) return
-		closeOperationForm()
-	}
 	const handleSubmit = e => {
 		e.preventDefault()
-		console.log(newOperation)
-		console.log(newOperation.categories)
+		const data = {
+			...newOperation,
+			category: getNameById(categories, newOperation.category),
+			client_account: getNameById(accounts, newOperation.client_account),
+			comment: newOperation.comment || '',
+			created_date: new Date().toISOString(),
+			user: user,
+		}
+		apiOperations
+			.POST(data)
+			.then(() => {
+				closeOperationForm()
+				setNewOperation({})
+				getOperation()
+			})
+			.catch(e => console.log(e))
 	}
 	useEffect(() => {
-		apiCategory
-			.GET()
-			.then(categories => {
+		const fetchData = async () => {
+			try {
+				const [categories, accounts] = await Promise.all([
+					apiCategory.GET(),
+					apiClientAccount.GET(),
+				])
 				setCategories(categories)
-			})
-			.catch(e => console.log(e))
-		apiClientAccount
-			.GET()
-			.then(accounts => {
 				setAccounts(accounts)
-			})
-			.catch(e => console.log(e))
+				setNewOperation(prev => ({
+					...prev,
+					category: categories[0]?.id || '',
+					client_account: accounts[0]?.id || '',
+				}))
+			} catch (e) {
+				console.error('Ошибка загрузки данных:', e)
+			}
+		}
+
+		fetchData()
 	}, [])
-	console.log(categories)
 	return (
-		<div className={styled.operationFormOverlay} onClick={handleOverlayClick}>
+		<div className={styled.operationFormOverlay}>
 			<div className={styled.operationForm}>
-				<h2>Новая операция</h2>
+				<h2 style={{ textAlign: 'center', marginBottom: '20px' }}>
+					Новая операция
+				</h2>
 				<form onSubmit={handleSubmit}>
-					<i onClick={closeOperationForm} className={styled.operationFormClose}>
-						<IoMdClose size={24} />
-					</i>
+					<input
+						placeholder='Назкание операции'
+						name='name'
+						value={newOperation.name}
+						onChange={handleInput}
+						required
+					/>
 					<input
 						type='number'
 						placeholder='Сумма'
@@ -57,17 +81,29 @@ export const OperationForm = ({ closeOperationForm }) => {
 					/>
 
 					<select
-						name='categories'
-						value={newOperation.categories}
+						name='category'
+						value={newOperation.category}
 						onChange={handleInput}
 					>
-						{categories.map(category => (
-							<option key={category.id} value={category.id}>
-								{category.name}
+						{categories.map(category => {
+							return (
+								<option key={category.id} value={category.id}>
+									{category.name}
+								</option>
+							)
+						})}
+					</select>
+					<select
+						name='client_account'
+						value={newOperation.client_account}
+						onChange={handleInput}
+					>
+						{accounts.map(account => (
+							<option key={account.id} value={account.id}>
+								{account.name}
 							</option>
 						))}
 					</select>
-
 					<textarea
 						name='comment'
 						placeholder='Комментарий (необязательно)'

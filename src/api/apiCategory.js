@@ -16,14 +16,19 @@ export const apiCategory = {
 		return id
 	},
 	POST: async data => {
-		const response = await fetch(`${URL}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			body: JSON.stringify(data),
-		})
-		if (!response.ok) throw new Error(response.statusText)
-		return response.json()
+		try {
+			const response = await fetch(`${URL}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				body: JSON.stringify(data),
+			})
+			if (!response.ok) throw new Error(response.statusText)
+			const newData = await response.json()
+			return transformCategory(newData)
+		} catch (e) {
+			console.log(e)
+		}
 	},
 }

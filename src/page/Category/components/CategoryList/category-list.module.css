@@ -16,8 +16,11 @@
 	transform: translateY(-5px);
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
+.cardContent {
+	max-width: 280px;
+}
 .cardTitle {
+	overflow-y: hidden;
 	color: #2c3e50;
 	margin: 0 0 0.5rem 0;
 	font-size: 1.2rem;

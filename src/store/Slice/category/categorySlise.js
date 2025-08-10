@@ -56,7 +56,6 @@ const categorySlice = createSlice({
 				state.loading = false
 				state.items.push({
 					...action.payload,
-					type: CATEGORY_NAME[action.payload.type],
 				})
 				state.error = null
 			})

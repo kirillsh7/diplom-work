@@ -1,54 +1,93 @@
 {
-	"users": [
-		{
-			"id": "9e0a",
-			"login": "kirill@mail.ru",
-			"password": "qwer1234",
-			"registered_at": "2050-09-17 12:18"
-		}
-	],
-	"category": [
-		{
-			"id": "eaed",
-			"name": "магазин",
-			"type": 0,
-			"user": "kirill@mail.ru"
-		},
-		{
-			"id": "44dc",
-			"name": "playstation 5",
-			"type": 0,
-			"user": "kirill@mail.ru"
-		}
-	],
-	"client-account": [
-		{
-			"id": "50ed",
-			"name": "основная",
-			"type": "кредитная карта ",
-			"amount": 10000,
-			"created_date": "2025-08-04",
-			"user": "kirill@mail.ru"
-		},
-		{
-			"id": "5954",
-			"name": "мастер какрд",
-			"type": "3290534",
-			"amount": 211124,
-			"created_date": "2025-08-04",
-			"user": "kirill@mail.ru"
-		}
-	],
-	"operation-client": [
-		{
-			"operation_name": "name",
-			"created_date": "2024-03-11",
-			"amount": 1000,
-			"comment": "Title...",
-			"category": "category[user_id].name",
-			"client_account": "client-account[user_id].name",
-			"user": "kirill@mail.ru",
-			"id": "268b"
-		}
-	]
+  "users": [
+    {
+      "id": "9e0a",
+      "login": "kirill@mail.ru",
+      "password": "qwer1234",
+      "registered_at": "2050-09-17 12:18"
+    }
+  ],
+  "category": [
+    {
+      "id": "eaed",
+      "name": "магазин",
+      "type": 0,
+      "user": "kirill@mail.ru"
+    },
+    {
+      "id": "44dc",
+      "name": "playstation 5",
+      "type": 0,
+      "user": "kirill@mail.ru"
+    },
+    {
+      "id": "ae50",
+      "name": "доходы",
+      "type": 1,
+      "user": "kirill@mail.ru"
+    },
+    {
+      "id": "18c0",
+      "name": "Подработка",
+      "type": 1,
+      "user": "kirill@mail.ru"
+    },
+    {
+      "id": "07be",
+      "name": "билеты",
+      "type": 0,
+      "user": "kirill@mail.ru"
+    }
+  ],
+  "client-account": [
+    {
+      "id": "50ed",
+      "name": "основная",
+      "type": "кредитная карта ",
+      "amount": 10000,
+      "created_date": "2025-08-04",
+      "user": "kirill@mail.ru"
+    },
+    {
+      "id": "5954",
+      "name": "мастер какрд",
+      "type": "3290534",
+      "amount": 211124,
+      "created_date": "2025-08-04",
+      "user": "kirill@mail.ru"
+    },
+    {
+      "id": "b12f",
+      "name": "12351057984",
+      "type": "Master Card",
+      "amount": 1000,
+      "created_date": "2025-08-08",
+      "user": "kirill@mail.ru"
+    }
+  ],
+  "operation-client": [
+    {
+      "id": "220f",
+      "name": "Проверка работоспособности",
+      "amount": "10000000",
+      "category": "магазин",
+      "client_account": "мастер какрд",
+      "comment": "Работает изменение",
+      "created_date": "2025-08-09T15:24:14.885Z",
+      "date": "2025-08-09T15:24:14.885Z",
+      "account": "12351057984"
+    },
+    {
+      "id": "dda3",
+      "category": "магазин",
+      "client_account": "основная",
+      "name": "1",
+      "amount": "1000",
+      "comment": "100000",
+      "created_date": "2025-08-09T16:40:37.214Z",
+      "user": "kirill@mail.ru",
+      "date": "2025-08-09T16:40:37.214Z",
+      "account": "основная"
+    }
+  ]
 }

@@ -12,9 +12,9 @@ export const apiOperations = {
 			return { error: e }
 		}
 	},
-	POST: async user => {
+	POST: async data => {
 		try {
-			const response = await fetch(`${URL}?user=${user}`, {
+			const response = await fetch(`${URL}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json;charset=utf-8',
@@ -39,7 +39,7 @@ export const apiOperations = {
 			return { error: e }
 		}
 	},
-	PATH: async id => {
+	PATH: async (id, data) => {
 		try {
 			const response = await fetch(`${URL}/${id}`, {
 				method: 'PATCH',

@@ -5,38 +5,60 @@ import { OperationForm } from './OperationForm/OperationForm'
 import { apiOperations } from '../../api/apiOperations'
 import { useSelector } from 'react-redux'
 import { userSelector } from '../../store/selectors'
+import { Modal } from '@components'
 export const Operation = () => {
 	const [loading, setLoading] = useState(false)
-	const user = useSelector(userSelector)
-	const [error, setError] = useState('')
 	const [showOperationForm, setShowOperationForm] = useState(false)
-	const closeOperationForm = () => setShowOperationForm(false)
+	const [error, setError] = useState('')
 	const [operations, setOperation] = useState([])
-	useEffect(() => {
+	const user = useSelector(userSelector)
+
+	const closeOperationForm = () => setShowOperationForm(false)
+
+	const getOperation = async () => {
 		setLoading(true)
-		apiOperations
+		await apiOperations
 			.GET(user)
-			.then(operations => {
-				setError('')
-				if (operations.error) throw new Error(operations.error)
-				setOperation(operations)
+			.then(data => {
+				setOperation(data)
 				setLoading(false)
 			})
 			.catch(e => {
-				console.log(e.message)
 				setError(e.message)
 				setLoading(false)
 			})
+	}
+	useEffect(() => {
+		getOperation()
 	}, [])
+
+	const removeOperation = id => {
+		setLoading(true)
+		apiOperations
+			.DELETE(id)
+			.then(() => {
+				setLoading(false)
+				getOperation()
+			})
+			.catch(e => {
+				setError(e.message)
+				setLoading(false)
+			})
+	}
+
 	if (loading) return <h1>Loading...</h1>
+
 	if (error) return <h1>{error}</h1>
+
 	return (
 		<div className={styled.operationPage}>
 			<div className={styled.operationHeader}>
 				<h1 className={styled.operationTitle}>Операции</h1>
 				<button
 					className={styled.operationCreateButton}
-					onClick={() => setShowOperationForm(true)}
+					onClick={() => {
+						setShowOperationForm(true)
+					}}
 				>
 					Создать операцию
 				</button>
@@ -46,11 +68,19 @@ export const Operation = () => {
 				<OperationList
 					operations={operations}
 					heading={['Сумма', 'Категория', 'Счет', 'Комментарий']}
+					removeOperation={removeOperation}
+					getOperation={getOperation}
 				/>
 			</div>
 
 			{showOperationForm && (
-				<OperationForm closeOperationForm={closeOperationForm} />
+				<Modal isOpen={showOperationForm} onClose={closeOperationForm}>
+					<OperationForm
+						getOperation={getOperation}
+						user={user}
+						closeOperationForm={closeOperationForm}
+					/>
+				</Modal>
 			)}
 		</div>
 	)
