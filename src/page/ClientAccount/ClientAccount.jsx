@@ -11,7 +11,7 @@ export const ClientAccount = () => {
 	const user = useSelector(userSelector)
 	const [accounts, setAccounts] = useState([])
 	const [loading, setLoading] = useState(false)
-
+	const [error, setError] = useState('')
 	const [newAccount, setNewAccount] = useState({
 		name: '',
 		type: '',
@@ -31,8 +31,8 @@ export const ClientAccount = () => {
 	}
 
 	const handleSubmit = e => {
-		setLoading(true)
 		e.preventDefault()
+		setLoading(true)
 		const account = {
 			name: newAccount.name,
 			type: newAccount.type,
@@ -51,9 +51,17 @@ export const ClientAccount = () => {
 		setLoading(true)
 		apiClientAccount
 			.GET(user)
-			.then(res => setAccounts(res))
+			.then(res => {
+				if (res.error) throw new Error(res.error)
+				setAccounts(res)
+			})
+			.catch(e => {
+				setError(e.message)
+				setLoading(false)
+			})
 			.finally(() => setLoading(false))
 	}, [])
+	if (error) return <p>{error}</p>
 	if (loading) return <p>Loading...</p>
 	return (
 		<div className='accounts-page'>

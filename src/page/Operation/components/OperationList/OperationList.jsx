@@ -1,13 +1,9 @@
-import { formatAmount } from '@utils/formatAmount'
 import { useEffect, useState } from 'react'
-import { EditControl } from '../components/EditControl/EditControl'
-import { EditableTableCell } from '../components/EditableTableCell/EditableTableCell'
-import { useChangeInput } from '../../../hooks/useChangeInput'
-import { apiCategory } from '../../../api/apiCategory'
-import { apiClientAccount } from '../../../api/apiClientAccount'
-import { getNameById } from '../../../utils/getNameById'
-import { getIdByName } from '../../../utils/getIdByName'
-import { apiOperations } from '../../../api/apiOperations'
+import { formatAmount } from '@utils'
+import { EditableTableCell, EditControl } from '@components'
+import { useChangeInput } from '@hooks'
+import { apiCategory, apiOperations, apiClientAccount } from '@api'
+
 export const OperationList = ({
 	heading,
 	operations,
@@ -32,8 +28,8 @@ export const OperationList = ({
 		setEditForm({
 			amount: operation.amount,
 			comment: operation.comment,
-			category: getIdByName(categories, operation.category),
-			client_account: getIdByName(accounts, operation.account),
+			category: operation.category.id,
+			client_account: operation.client_account.id,
 		})
 	}
 
@@ -47,18 +43,16 @@ export const OperationList = ({
 			...newOperation,
 			amount: editForm.amount,
 			comment: editForm.comment,
-			category:
-				getNameById(categories, editForm.category) || newOperation.category,
-			client_account:
-				getNameById(accounts, editForm.client_account) ||
-				newOperation.client_account,
+			category: categories.find(category => category.id === editForm.category),
+			client_account: accounts.find(
+				account => account.id === editForm.client_account
+			),
 		}
 		apiOperations.PATH(id, data).then(() => {
 			getOperation()
 			setIsEdit({})
 		})
 	}
-
 	useEffect(() => {
 		const fetchData = async () => {
 			const [categories, accounts] = await Promise.all([
@@ -70,7 +64,7 @@ export const OperationList = ({
 		}
 		fetchData()
 	}, [])
-
+	if (!operations.length) return <div>Создайте свою первую операцию.</div>
 	return (
 		<table
 			style={{
@@ -112,7 +106,9 @@ export const OperationList = ({
 							name='category'
 							selectData={categories}
 							value={
-								isEdit === operation.id ? editForm.category : operation.category
+								isEdit === operation.id
+									? editForm.category
+									: operation.category.name
 							}
 							onChange={changeInput}
 						/>
@@ -123,7 +119,7 @@ export const OperationList = ({
 							value={
 								isEdit === operation.id
 									? editForm.client_account
-									: operation.account
+									: operation.client_account.name
 							}
 							onChange={changeInput}
 						/>

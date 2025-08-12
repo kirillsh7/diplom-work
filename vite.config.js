@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import * as patch from 'path'
 
@@ -9,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = patch.dirname(__filename)
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), tailwindcss()],
+	plugins: [react()],
 	server: {
 		host: '0.0.0.0',
 		open: true,
@@ -24,6 +23,8 @@ export default defineConfig({
 			'@store': patch.resolve(__dirname, 'src/store'),
 			'@layout': patch.resolve(__dirname, 'src/layout'),
 			'@utils': patch.resolve(__dirname, 'src/utils'),
+			'@hooks': patch.resolve(__dirname, 'src/hooks'),
+			'@routes': patch.resolve(__dirname, 'src/routes'),
 		},
 	},
 })

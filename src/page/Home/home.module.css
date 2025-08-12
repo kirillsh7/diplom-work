@@ -1,0 +1,100 @@
+.container {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+.gridContainer {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+	.gridContainer {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.card {
+	background-color: white;
+	border-radius: 0.5rem;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	padding: 1.5rem;
+}
+
+.cardTitle {
+	font-size: 1.125rem;
+	font-weight: 600;
+	color: #4b5563;
+	margin-bottom: 0.5rem;
+}
+
+.cardAmount {
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.income {
+	color: #10b981;
+}
+
+.expense {
+	color: #ef4444;
+}
+
+.chartContainer {
+	margin-bottom: 2rem;
+}
+
+.sectionTitle {
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
+.chart {
+	height: 20rem;
+}
+
+.sectionHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.viewAll a {
+	color: #3b82f6;
+}
+
+.viewAll:hover a {
+	color: #1d4ed8;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.listItem {
+	border-bottom: 1px solid #e5e7eb;
+	padding-bottom: 0.5rem;
+}
+
+.itemRow {
+	display: flex;
+	justify-content: space-between;
+}
+
+.itemName {
+	font-weight: 500;
+}
+
+.itemMeta {
+	font-size: 0.875rem;
+	color: #6b7280;
+}

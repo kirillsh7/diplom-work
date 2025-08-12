@@ -1,5 +1,4 @@
 import { BASE_URL } from '../constants'
-import { transformOperation } from './transformers'
 const URL = `${BASE_URL}/operation-client`
 export const apiOperations = {
 	GET: async user => {
@@ -7,7 +6,7 @@ export const apiOperations = {
 			const response = await fetch(`${URL}?user=${user}`)
 			if (!response.ok) throw new Error(response.statusText)
 			const data = await response.json()
-			return data.map(el => transformOperation(el))
+			return data
 		} catch (e) {
 			return { error: e }
 		}

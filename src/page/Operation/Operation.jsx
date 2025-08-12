@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
-import styled from './operation.module.css'
-import { OperationList } from './OperationList/OperationList'
-import { OperationForm } from './OperationForm/OperationForm'
-import { apiOperations } from '../../api/apiOperations'
 import { useSelector } from 'react-redux'
-import { userSelector } from '../../store/selectors'
-import { Modal } from '@components'
+import { apiOperations } from '@api'
+import { userSelector } from '@store/selectors'
+import { Modal, Table } from '@components'
+import { OperationForm } from './components'
+import styled from './operation.module.css'
+
 export const Operation = () => {
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const [showOperationForm, setShowOperationForm] = useState(false)
 	const [error, setError] = useState('')
 	const [operations, setOperation] = useState([])
@@ -16,11 +16,11 @@ export const Operation = () => {
 	const closeOperationForm = () => setShowOperationForm(false)
 
 	const getOperation = async () => {
-		setLoading(true)
 		await apiOperations
 			.GET(user)
 			.then(data => {
-				setOperation(data)
+				if (data.error) throw new Error(data.error)
+				setOperation(data.reverse())
 				setLoading(false)
 			})
 			.catch(e => {
@@ -28,23 +28,28 @@ export const Operation = () => {
 				setLoading(false)
 			})
 	}
+	const removeOperation = id => {
+		apiOperations
+			.DELETE(id)
+			.then(data => {
+				if (data.error) throw new Error(data.error)
+				setOperation(operations.filter(el => el.id !== id))
+			})
+			.catch(e => {
+				setError(e.message)
+			})
+	}
+
 	useEffect(() => {
 		getOperation()
 	}, [])
 
-	const removeOperation = id => {
-		setLoading(true)
-		apiOperations
-			.DELETE(id)
-			.then(() => {
-				setLoading(false)
-				getOperation()
-			})
-			.catch(e => {
-				setError(e.message)
-				setLoading(false)
-			})
-	}
+	const heading = [
+		{ name: 'Сумма', type: 'number', key: 'amount' },
+		{ name: 'Счет', type: 'select', key: 'client_account' },
+		{ name: 'Категория', type: 'select', key: 'category' },
+		{ name: 'Комментарий', type: 'text', key: 'comment', controls: true },
+	]
 
 	if (loading) return <h1>Loading...</h1>
 
@@ -65,11 +70,10 @@ export const Operation = () => {
 			</div>
 
 			<div className={styled.operationList}>
-				<OperationList
+				<Table
 					operations={operations}
-					heading={['Сумма', 'Категория', 'Счет', 'Комментарий']}
+					heading={heading}
 					removeOperation={removeOperation}
-					getOperation={getOperation}
 				/>
 			</div>
 

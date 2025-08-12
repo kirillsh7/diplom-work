@@ -43,6 +43,7 @@ export const Category = () => {
 				<div className={styles.header}>
 					<h1 className={styles.title}>Мои категории</h1>
 					<button
+						type='button'
 						className={styles.createCategory}
 						onClick={() => setIsModalOpen(true)}
 					>

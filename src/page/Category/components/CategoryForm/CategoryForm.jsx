@@ -10,13 +10,12 @@ export const CategoryForm = ({ handleCreate }) => {
 		type: CATEGORY.EXPENSES,
 		user,
 	})
-
-	const onSubmit = e => {
+	const handleSubmit = e => {
 		e.preventDefault()
 		handleCreate(categoryDataForm)
 	}
 	return (
-		<form className={styled.form} onSubmit={e => onSubmit(e)}>
+		<form className={styled.form} onSubmit={handleSubmit}>
 			<h1 className={styled.title}>Создание категории</h1>
 
 			<div className={styled.formGroup}>

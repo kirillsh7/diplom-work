@@ -5,7 +5,7 @@ import { CATEGORY_NAME, CATEGORY } from '../../../../constants/category'
 export const CategoryList = ({ categories, handleDelete }) => {
 	return categories.map(category => (
 		<div key={category.id} className={styles.card}>
-			<div className={styles.cardContent}>
+			<div>
 				<h2 className={styles.cardTitle}>{category.name}</h2>
 				<p className={styles.cardType}>{CATEGORY_NAME[category.type]}</p>
 			</div>

@@ -1,1 +1,1 @@
-export const getUser = async () => {}
+export const apiUser = async () => {}

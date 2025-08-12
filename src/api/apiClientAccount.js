@@ -8,7 +8,7 @@ export const apiClientAccount = {
 			const data = await response.json()
 			return data.map(el => transformClientAcount(el))
 		} catch (e) {
-			console.log(e)
+			return { error: e }
 		}
 	},
 	POST: async data => {
@@ -23,6 +23,22 @@ export const apiClientAccount = {
 			if (!response.ok) throw new Error(response.statusText)
 			const newData = await response.json()
 			return transformClientAcount(newData)
+		} catch (e) {
+			console.log(e)
+		}
+	},
+	PATCH: async (id, data) => {
+		try {
+			const response = await fetch(`${BASE_URL}/client-account/${id}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				body: JSON.stringify(data),
+			})
+			if (!response.ok) throw new Error(response.statusText)
+			const newData = await response.json()
+			return newData
 		} catch (e) {
 			console.log(e)
 		}

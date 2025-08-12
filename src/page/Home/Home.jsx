@@ -1,13 +1,6 @@
-// export const Home = () => {
-// 	return (<main>
-// 		Главная
-// 	</main>
-
-// 	)
-// }
-
 import { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
+import styled from './home.module.css'
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -18,6 +11,11 @@ import {
 	Tooltip,
 	Legend,
 } from 'chart.js'
+import { apiClientAccount, apiOperations } from '@api'
+import { useSelector } from 'react-redux'
+import { userSelector } from '@store/selectors'
+import { Link } from 'react-router-dom'
+import { CATEGORY } from '@constants'
 
 ChartJS.register(
 	CategoryScale,
@@ -30,92 +28,75 @@ ChartJS.register(
 )
 
 export const Home = () => {
-	// Состояния для данных
 	const [incomes, setIncomes] = useState([])
 	const [expenses, setExpenses] = useState([])
 	const [accounts, setAccounts] = useState([])
 	const [chartData, setChartData] = useState({})
-
-	// Загрузка данных (в реальном приложении здесь был бы запрос к API)
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState('')
+	const user = useSelector(userSelector)
 	useEffect(() => {
-		// Моковые данные для демонстрации
-		const mockIncomes = [
-			{
-				id: 1,
-				amount: 50000,
-				category: 'Зарплата',
-				date: '2023-05-01',
-				description: 'Зарплата за апрель',
-			},
-			{
-				id: 2,
-				amount: 15000,
-				category: 'Фриланс',
-				date: '2023-05-05',
-				description: 'Разработка сайта',
-			},
-		]
+		setLoading(true)
+		const fetchData = async () => {
+			try {
+				const [account, operation] = await Promise.all([
+					apiClientAccount.GET(user),
+					apiOperations.GET(user),
+				])
+				if (account.error || operation.error) {
+					throw new Error(account.error || operation.error)
+				}
+				const mockAccounts = account.map(el => ({
+					id: el.id,
+					name: el.name,
+					balance: el.amount,
+					currency: 'RUB',
+				}))
+				const currentData = el => ({
+					id: el.id,
+					amount: el.amount,
+					category: el.category.name,
+					date: el.created_date,
+					description: el.comment,
+				})
 
-		const mockExpenses = [
-			{
-				id: 1,
-				amount: 15000,
-				category: 'Продукты',
-				date: '2023-05-02',
-				description: 'Покупки в Пятерочке',
-			},
-			{
-				id: 2,
-				amount: 5000,
-				category: 'Транспорт',
-				date: '2023-05-03',
-				description: 'Такси в аэропорт',
-			},
-			{
-				id: 3,
-				amount: 12000,
-				category: 'Развлечения',
-				date: '2023-05-07',
-				description: 'Ресторан',
-			},
-		]
+				const mockExpenses = operation
+					.filter(el => el?.category?.type === CATEGORY.EXPENSES)
+					.map(el => currentData(el))
+				const mockIncomes = operation
+					.filter(el => el?.category?.type === CATEGORY.INCOME)
+					.map(el => currentData(el))
 
-		const mockAccounts = [
-			{ id: 1, name: 'Сбербанк', balance: 125000, currency: 'RUB' },
-			{ id: 2, name: 'Тинькофф', balance: 45000, currency: 'RUB' },
-			{ id: 3, name: 'Наличные', balance: 15000, currency: 'RUB' },
-		]
-
-		setIncomes(mockIncomes)
-		setExpenses(mockExpenses)
-		setAccounts(mockAccounts)
-
-		// Подготовка данных для графика
-		prepareChartData(mockIncomes, mockExpenses)
+				setIncomes(mockIncomes)
+				setExpenses(mockExpenses)
+				setAccounts(mockAccounts)
+				setLoading(false)
+				prepareChartData(mockIncomes, mockExpenses)
+			} catch (e) {
+				setError(e.message)
+				setLoading(false)
+			}
+		}
+		fetchData()
 	}, [])
 
-	// Подготовка данных для графика
 	const prepareChartData = (incomesData, expensesData) => {
-		// Группируем доходы и расходы по дням
 		const incomeByDay = {}
 		const expenseByDay = {}
 
 		incomesData.forEach(income => {
 			const day = income.date
-			incomeByDay[day] = (incomeByDay[day] || 0) + income.amount
+			incomeByDay[day] = (incomeByDay[day] || 0) + Number(income.amount)
 		})
 
 		expensesData.forEach(expense => {
 			const day = expense.date
-			expenseByDay[day] = (expenseByDay[day] || 0) + expense.amount
+			expenseByDay[day] = (expenseByDay[day] || 0) + Number(expense.amount)
 		})
 
-		// Получаем все уникальные даты
 		const allDays = Array.from(
 			new Set([...Object.keys(incomeByDay), ...Object.keys(expenseByDay)])
 		).sort()
-
-		// Формируем данные для графика
 		const data = {
 			labels: allDays,
 			datasets: [
@@ -139,64 +120,44 @@ export const Home = () => {
 		setChartData(data)
 	}
 
-	// Рассчитываем общий баланс
 	const totalBalance = accounts.reduce(
 		(sum, account) => sum + account.balance,
 		0
 	)
-
+	if (error) return <p>{error}</p>
+	if (loading) return <div>Loading...</div>
 	return (
-		<div className='container mx-auto px-4 py-8'>
-			<header className='flex justify-between items-center mb-8'>
-				<h1 className='text-3xl font-bold'>Главная</h1>
-				<div className='flex items-center space-x-4'>
-					<span className='text-lg'>Username</span>
-					<div className='w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center'>
-						<span className='text-gray-600'>U</span>
-					</div>
-				</div>
-			</header>
-
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
-				{/* Карточка общего баланса */}
-				<div className='bg-white rounded-lg shadow p-6'>
-					<h3 className='text-lg font-semibold text-gray-700 mb-2'>
-						Общий баланс
-					</h3>
-					<p className='text-2xl font-bold'>
-						{totalBalance.toLocaleString()} ₽
-					</p>
+		<div className={styled.container}>
+			<div className={styled.gridContainer}>
+				<div className={styled.card}>
+					<h3 className={styled.cardTitle}>Общий баланс</h3>
+					<p className={styled.cardAmount}>{totalBalance.toLocaleString()} ₽</p>
 				</div>
 
-				{/* Карточка доходов */}
-				<div className='bg-white rounded-lg shadow p-6'>
-					<h3 className='text-lg font-semibold text-gray-700 mb-2'>Доходы</h3>
-					<p className='text-2xl font-bold text-green-500'>
+				<div className={styled.card}>
+					<h3 className={styled.cardTitle}>Доходы</h3>
+					<p className={`${styled.cardAmount} ${styled.income}`}>
 						{incomes
-							.reduce((sum, income) => sum + income.amount, 0)
+							.reduce((sum, income) => Number(sum) + Number(income.amount), 0)
 							.toLocaleString()}{' '}
 						₽
 					</p>
 				</div>
 
-				{/* Карточка расходов */}
-				<div className='bg-white rounded-lg shadow p-6'>
-					<h3 className='text-lg font-semibold text-gray-700 mb-2'>Расходы</h3>
-					<p className='text-2xl font-bold text-red-500'>
+				<div className={styled.card}>
+					<h3 className={styled.cardTitle}>Расходы</h3>
+					<p className={`${styled.cardAmount} ${styled.expense}`}>
 						{expenses
-							.reduce((sum, expense) => sum + expense.amount, 0)
+							.reduce((sum, expense) => Number(sum) + Number(expense.amount), 0)
 							.toLocaleString()}{' '}
 						₽
 					</p>
 				</div>
 			</div>
 
-			{/* График доходов и расходов */}
-			<div className='bg-white rounded-lg shadow p-6 mb-8'>
-				<h2 className='text-xl font-semibold mb-4'>
-					Динамика доходов и расходов
-				</h2>
-				<div className='h-80'>
+			<div className={`${styled.card} ${styled.chartContainer}`}>
+				<h2 className={styled.sectionTitle}>Динамика доходов и расходов</h2>
+				<div className={styled.chart}>
 					{chartData.labels && (
 						<Line
 							data={chartData}
@@ -206,23 +167,24 @@ export const Home = () => {
 				</div>
 			</div>
 
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-				{/* Список последних доходов */}
-				<div className='bg-white rounded-lg shadow p-6'>
-					<div className='flex justify-between items-center mb-4'>
-						<h2 className='text-xl font-semibold'>Последние доходы</h2>
-						<button className='text-blue-500 hover:text-blue-700'>Все</button>
+			<div className={styled.gridContainer}>
+				<div className={styled.card}>
+					<div className={styled.sectionHeader}>
+						<h2 className={styled.sectionTitle}>Последние доходы</h2>
+						<button className={styled.viewAll}>
+							<Link to='/operation'>Все</Link>
+						</button>
 					</div>
-					<ul className='space-y-3'>
-						{incomes.slice(0, 5).map(income => (
-							<li key={income.id} className='border-b pb-2'>
-								<div className='flex justify-between'>
-									<span className='font-medium'>{income.category}</span>
-									<span className='text-green-500'>
+					<ul className={styled.list}>
+						{incomes.slice(0, 3).map(income => (
+							<li key={income.id} className={styled.listItem}>
+								<div className={styled.itemRow}>
+									<span className={styled.itemName}>{income.category}</span>
+									<span className={styled.income}>
 										+{income.amount.toLocaleString()} ₽
 									</span>
 								</div>
-								<p className='text-sm text-gray-500'>
+								<p className={styled.itemMeta}>
 									{income.date} • {income.description}
 								</p>
 							</li>
@@ -230,22 +192,23 @@ export const Home = () => {
 					</ul>
 				</div>
 
-				{/* Список последних расходов */}
-				<div className='bg-white rounded-lg shadow p-6'>
-					<div className='flex justify-between items-center mb-4'>
-						<h2 className='text-xl font-semibold'>Последние расходы</h2>
-						<button className='text-blue-500 hover:text-blue-700'>Все</button>
+				<div className={styled.card}>
+					<div className={styled.sectionHeader}>
+						<h2 className={styled.sectionTitle}>Последние расходы</h2>
+						<button className={styled.viewAll}>
+							<Link to='/operation'>Все</Link>
+						</button>
 					</div>
-					<ul className='space-y-3'>
-						{expenses.slice(0, 5).map(expense => (
-							<li key={expense.id} className='border-b pb-2'>
-								<div className='flex justify-between'>
-									<span className='font-medium'>{expense.category}</span>
-									<span className='text-red-500'>
+					<ul className={styled.list}>
+						{expenses.slice(0, 3).map(expense => (
+							<li key={expense.id} className={styled.listItem}>
+								<div className={styled.itemRow}>
+									<span className={styled.itemName}>{expense.category}</span>
+									<span className={styled.expense}>
 										-{expense.amount.toLocaleString()} ₽
 									</span>
 								</div>
-								<p className='text-sm text-gray-500'>
+								<p className={styled.itemMeta}>
 									{expense.date} • {expense.description}
 								</p>
 							</li>
@@ -253,17 +216,18 @@ export const Home = () => {
 					</ul>
 				</div>
 
-				{/* Список счетов */}
-				<div className='bg-white rounded-lg shadow p-6'>
-					<div className='flex justify-between items-center mb-4'>
-						<h2 className='text-xl font-semibold'>Мои счета</h2>
-						<button className='text-blue-500 hover:text-blue-700'>Все</button>
+				<div className={styled.card}>
+					<div className={styled.sectionHeader}>
+						<h2 className={styled.sectionTitle}>Мои счета</h2>
+						<button className={styled.viewAll}>
+							<Link to='/client-account'>Все</Link>
+						</button>
 					</div>
-					<ul className='space-y-3'>
-						{accounts.map(account => (
-							<li key={account.id} className='border-b pb-2'>
-								<div className='flex justify-between'>
-									<span className='font-medium'>{account.name}</span>
+					<ul className={styled.list}>
+						{accounts.slice(0, 3).map(account => (
+							<li key={account.id} className={styled.listItem}>
+								<div className={styled.itemRow}>
+									<span className={styled.itemName}>{account.name}</span>
 									<span>
 										{account.balance.toLocaleString()} {account.currency}
 									</span>

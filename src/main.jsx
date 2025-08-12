@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import {
 	Category,
 	Home,
@@ -11,13 +12,10 @@ import {
 	Login,
 	Register,
 } from '@page'
-import './index.css'
-import { MainLayout } from '@layout'
-import { Error } from '@components'
-import { Provider } from 'react-redux'
 import store from '@store'
-import { GuestRoute } from './routes/GuestRoute'
-import { ProtectedRoute } from './routes/ProtectedRoute'
+import { MainLayout } from '@layout'
+import { GuestRoute, ProtectedRoute } from '@routes'
+import './index.css'
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
@@ -40,7 +38,7 @@ createRoot(document.getElementById('root')).render(
 						<Route path='/register' element={<Register />} />
 					</Route>
 
-					<Route path='*' element={<Error />} />
+					<Route path='*' element={<p>Error</p>} />
 				</Routes>
 			</Provider>
 		</BrowserRouter>

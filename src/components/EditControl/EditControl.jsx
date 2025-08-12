@@ -14,18 +14,14 @@ export const EditControl = ({
 		<div style={{ display: 'flex', gap: '10px' }}>
 			{isEdit === id ? (
 				<div style={{ display: 'flex', gap: '5px' }}>
-					<AiOutlineCheckCircle onClick={saveEdited} />
-					<AiOutlineCloseCircle onClick={editControlClose} />
+					<AiOutlineCheckCircle size={20} onClick={saveEdited} />
+					<AiOutlineCloseCircle size={20} onClick={editControlClose} />
 				</div>
 			) : (
-				<i>
-					<MdEdit onClick={handleEdit} />
-				</i>
+				<MdEdit size={20} onClick={handleEdit} />
 			)}
 
-			<i onClick={removeOperation}>
-				<MdDelete />
-			</i>
+			<MdDelete size={20} onClick={removeOperation} />
 		</div>
 	)
 }
