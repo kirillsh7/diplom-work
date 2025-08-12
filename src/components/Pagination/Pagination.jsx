@@ -1,5 +1,6 @@
 import styled from './pagination.module.css'
 export const Pagination = ({ totalPages, changePage, page }) => {
+	if (totalPages.length < 2) return
 	return (
 		<nav className={styled.pagination}>
 			<ul className={styled.paginationList}>

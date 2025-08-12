@@ -28,17 +28,6 @@ export const Operation = () => {
 				setLoading(false)
 			})
 	}
-	const removeOperation = id => {
-		apiOperations
-			.DELETE(id)
-			.then(data => {
-				if (data.error) throw new Error(data.error)
-				setOperation(operations.filter(el => el.id !== id))
-			})
-			.catch(e => {
-				setError(e.message)
-			})
-	}
 
 	useEffect(() => {
 		getOperation()
@@ -48,7 +37,7 @@ export const Operation = () => {
 		{ name: 'Сумма', type: 'number', key: 'amount' },
 		{ name: 'Счет', type: 'select', key: 'client_account' },
 		{ name: 'Категория', type: 'select', key: 'category' },
-		{ name: 'Комментарий', type: 'text', key: 'comment', controls: true },
+		{ name: 'Комментарий', type: 'text', key: 'comment', controls: 'edit' },
 	]
 
 	if (loading) return <h1>Loading...</h1>
@@ -73,7 +62,7 @@ export const Operation = () => {
 				<Table
 					operations={operations}
 					heading={heading}
-					removeOperation={removeOperation}
+					fetchData={apiOperations}
 				/>
 			</div>
 

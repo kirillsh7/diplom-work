@@ -3,7 +3,13 @@ import { useChangeInput } from '@hooks'
 import { apiCategory, apiClientAccount, apiOperations } from '@api'
 import { EditControl } from '../../../EditControl/EditControl'
 import { EditableTableCell } from '../../../EditableTableCell/EditableTableCell'
-import { formatAmount, findOperation, changeData, findById } from '@utils'
+import {
+	formatAmount,
+	findOperation,
+	changeData,
+	findById,
+	removeData,
+} from '@utils'
 
 export const TableBody = ({ data, changeOperation, ...props }) => {
 	const [isEdit, setIsEdit] = useState(null)
@@ -12,7 +18,7 @@ export const TableBody = ({ data, changeOperation, ...props }) => {
 	const changeInput = useChangeInput(setEditForm)
 	const [error, setError] = useState(null)
 
-	const { heading, removeOperation, operations } = props
+	const { heading, operations, fetchData } = props
 
 	const editControlClose = () => {
 		setIsEdit({})
@@ -41,10 +47,25 @@ export const TableBody = ({ data, changeOperation, ...props }) => {
 				editForm.client_account
 			),
 		}
-		apiOperations.PATH(id, newData).then(res => {
-			changeOperation(changeData(data, id, res))
-			setIsEdit({})
-		})
+		fetchData
+			.PATH(id, newData)
+			.then(res => {
+				if (res.error) throw new Error(data.error)
+				changeOperation(changeData(data, id, res))
+				setIsEdit({})
+			})
+			.catch(e => setError(e.message))
+	}
+	const removeOperation = id => {
+		fetchData
+			.DELETE(id)
+			.then(res => {
+				if (res.error) throw new Error(res.error)
+				changeOperation(removeData(data, id))
+			})
+			.catch(e => {
+				setError(e.message)
+			})
 	}
 	useEffect(() => {
 		const fetchData = async () => {
@@ -59,6 +80,7 @@ export const TableBody = ({ data, changeOperation, ...props }) => {
 		}
 		fetchData()
 	}, [])
+	if (error) return <p>{error}</p>
 	return (
 		<tbody>
 			{error && (
@@ -80,6 +102,7 @@ export const TableBody = ({ data, changeOperation, ...props }) => {
 									controls={
 										controls ? (
 											<EditControl
+												controls={controls}
 												isEdit={isEdit}
 												id={el.id}
 												handleEdit={handleEdit.bind(null, el.id)}

@@ -69,14 +69,6 @@
       "amount": 50000,
       "created_date": "2025-08-10",
       "user": "kirill@mail.ru"
-    },
-    {
-      "id": "911b",
-      "name": "wef",
-      "type": "fvdvfd",
-      "amount": 10000,
-      "created_date": "2025-08-10",
-      "user": "kirill@mail.ru"
     }
   ],
   "operation-client": [
@@ -381,26 +373,6 @@
       "user": "kirill@mail.ru"
     },
     {
-      "id": "i5j6",
-      "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
-      },
-      "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": -21390129,
-        "date": "2025-08-10"
-      },
-      "name": "111",
-      "amount": "34567",
-      "comment": "11",
-      "created_date": "2025.07.18",
-      "user": "kirill@mail.ru"
-    },
-    {
       "id": "k7l8",
       "category": {
         "id": "8f41",
@@ -463,8 +435,8 @@
     {
       "id": "954b",
       "category": {
-        "id": "e1b7",
-        "name": "Подработка",
+        "id": "35e7",
+        "name": "Зарплата",
         "type": 1
       },
       "client_account": {
@@ -476,7 +448,7 @@
       },
       "name": "1",
       "amount": "11111",
-      "comment": "12e21",
+      "comment": "rrgedgdf",
       "created_date": "2044.10.15",
       "user": "kirill@mail.ru"
     }

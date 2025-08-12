@@ -25,6 +25,7 @@ export const Table = ({ ...props }) => {
 				<TableHeader heading={heading} />
 				<TableBody data={data} changeOperation={changeOperation} {...props} />
 			</table>
+
 			<Pagination
 				totalPages={totalPages}
 				changePage={changePaginationPage}

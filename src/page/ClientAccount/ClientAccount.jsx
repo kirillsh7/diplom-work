@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react'
-import { ClientAccountForm, ClientAccountTable } from './components'
-import { Modal } from '@components'
-import { formatAmount } from '@utils/formatAmount'
-import './client-account.css'
 import { useSelector } from 'react-redux'
+import { apiClientAccount } from '@api'
+import { Modal, Table } from '@components'
 import { userSelector } from '@store/selectors'
-import { apiClientAccount } from '../../api/apiClientAccount'
-import { useChangeInput } from '../../hooks/useChangeInput'
+import { useChangeInput } from '@hooks'
+import { ClientAccountForm } from './components'
+import './client-account.css'
 export const ClientAccount = () => {
 	const user = useSelector(userSelector)
 	const [accounts, setAccounts] = useState([])
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState('')
 	const [newAccount, setNewAccount] = useState({
 		name: '',
@@ -21,14 +20,6 @@ export const ClientAccount = () => {
 
 	const [showAddForm, setShowAddForm] = useState(false)
 	const handleInput = useChangeInput(setNewAccount)
-
-	const handleDeleteAccount = id => {
-		setLoading(true)
-		apiClientAccount.DELETE(id).then(() => {
-			setAccounts(prev => prev.filter(account => account.id !== id))
-			setLoading(false)
-		})
-	}
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -47,8 +38,13 @@ export const ClientAccount = () => {
 			setShowAddForm(false)
 		})
 	}
+	const heading = [
+		{ name: 'Название', type: 'text', key: 'name' },
+		{ name: 'Тип', type: 'text', key: 'type' },
+		{ name: 'Сумма', type: 'number', key: 'amount' },
+		{ name: 'Дата', type: 'date', key: 'date', controls: 'delete' },
+	]
 	useEffect(() => {
-		setLoading(true)
 		apiClientAccount
 			.GET(user)
 			.then(res => {
@@ -61,6 +57,7 @@ export const ClientAccount = () => {
 			})
 			.finally(() => setLoading(false))
 	}, [])
+
 	if (error) return <p>{error}</p>
 	if (loading) return <p>Loading...</p>
 	return (
@@ -89,10 +86,10 @@ export const ClientAccount = () => {
 				{accounts.length === 0 ? (
 					<p>У вас пока нет счетов</p>
 				) : (
-					<ClientAccountTable
-						accounts={accounts}
-						formatAmount={formatAmount}
-						handleDeleteAccount={handleDeleteAccount}
+					<Table
+						heading={heading}
+						operations={accounts}
+						fetchData={apiClientAccount}
 					/>
 				)}
 			</div>

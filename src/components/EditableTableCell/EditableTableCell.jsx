@@ -7,7 +7,9 @@ export const EditableTableCell = ({
 	controls,
 	selectData,
 }) => {
-	const currentValue = typeof value === 'object' ? value.name : value
+	const currentValueName = typeof value === 'object' ? value.name : value
+
+	const isNumber = !isNaN(value) && isFinite(value) && value !== ''
 	return (
 		<td style={{ padding: '8px', minWidth: '100px' }}>
 			<div
@@ -22,7 +24,7 @@ export const EditableTableCell = ({
 					selectData ? (
 						<select
 							name={name}
-							value={currentValue}
+							value={currentValueName}
 							onChange={onChange}
 							style={{
 								width: '100%',
@@ -40,7 +42,7 @@ export const EditableTableCell = ({
 					) : (
 						<input
 							name={name}
-							value={currentValue}
+							value={currentValueName}
 							onChange={onChange}
 							style={{
 								width: '100%',
@@ -50,10 +52,12 @@ export const EditableTableCell = ({
 							}}
 						/>
 					)
-				) : typeof value === 'number' ? (
-					<div style={{ width: '100%' }}>{formatAmount(currentValue)}</div>
+				) : isNumber ? (
+					<div style={{ width: '100%' }}>
+						<p>{formatAmount(currentValueName)}</p>
+					</div>
 				) : (
-					<div style={{ width: '100%' }}>{currentValue}</div>
+					<div style={{ width: '100%' }}>{currentValueName}</div>
 				)}
 				{controls}
 			</div>
