@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom'
-import * as yup from 'yup'
-import styled from './login.module.css'
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { authUser } from '@store/Slice/auth/authSlice'
-import { useChangeInput } from '../../hooks/useChangeInput'
+import * as yup from 'yup'
+import { authUser, updateUserLogin } from '@store/Slice/auth/authSlice'
+import { useChangeInput } from '@hooks'
 import { server } from '../../bff'
+import styled from './login.module.css'
+import { createErrorMessage } from '@utils'
 
 const authSchema = yup.object().shape({
 	login: yup
@@ -50,32 +50,26 @@ export const Login = () => {
 			server
 				.authorize(authData.login, authData.password)
 				.then(({ error, res }) => {
+
 					if (error) {
-						setErrorServer(error)
+						setErrorServer(error?.message || error)
 						setIsLoading(false)
 						return
 					}
-					dispatch(authUser(res.login))
+					dispatch(authUser({ id: res.id, login: res.login }))
 					navigate('/')
 					setIsLoading(false)
 				})
+
+				.finally(() => setIsLoading(false))
 		} catch (err) {
-			const { inner } = err
-			const errors = Array.isArray(inner)
-				? inner.reduce((acc, item) => {
-						const { path, errors } = item
-						if (!acc.hasOwnProperty(path) && errors.length) {
-							acc[path] = errors[0]
-						}
-						return acc
-				  }, {})
-				: {}
-			setError(errors)
+
+			setError(createErrorMessage(err))
 			setIsLoading(false)
 		}
 	}
 
-	const handleInptu = e => {
+	const handleInput = e => {
 		changeInput(e)
 		resetError()
 	}
@@ -89,7 +83,7 @@ export const Login = () => {
 						placeholder='Почта'
 						name='login'
 						value={authData.login}
-						onChange={handleInptu}
+						onChange={handleInput}
 					/>
 				</div>
 				<div>
@@ -98,7 +92,7 @@ export const Login = () => {
 						name='password'
 						type='password'
 						value={authData.password}
-						onChange={handleInptu}
+						onChange={handleInput}
 					/>
 				</div>
 				{errorMessage && <p className={styled.error}>{errorMessage}</p>}

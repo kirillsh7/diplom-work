@@ -10,6 +10,7 @@ export const Operation = () => {
 	const [loading, setLoading] = useState(true)
 	const [showOperationForm, setShowOperationForm] = useState(false)
 	const [error, setError] = useState('')
+	const [errorServer, setErrorServer] = useState('')
 	const [operations, setOperation] = useState([])
 	const user = useSelector(userSelector)
 
@@ -20,6 +21,7 @@ export const Operation = () => {
 			.GET(user)
 			.then(data => {
 				if (data.error) throw new Error(data.error)
+				if (data.length === 0) setErrorServer('Нет операций')
 				setOperation(data.reverse())
 				setLoading(false)
 			})
@@ -32,12 +34,11 @@ export const Operation = () => {
 	useEffect(() => {
 		getOperation()
 	}, [])
-
 	const heading = [
-		{ name: 'Сумма', type: 'number', key: 'amount' },
-		{ name: 'Счет', type: 'select', key: 'client_account' },
-		{ name: 'Категория', type: 'select', key: 'category' },
-		{ name: 'Комментарий', type: 'text', key: 'comment', controls: 'edit' },
+		{ name: 'Сумма', key: 'amount' },
+		{ name: 'Счет', key: 'client_account' },
+		{ name: 'Категория', key: 'category' },
+		{ name: 'Комментарий', key: 'comment', controls: 'edit' },
 	]
 
 	if (loading) return <h1>Loading...</h1>
@@ -59,11 +60,13 @@ export const Operation = () => {
 			</div>
 
 			<div className={styled.operationList}>
-				<Table
+				{errorServer ? <h1>{errorServer}</h1> : <Table
 					operations={operations}
 					heading={heading}
 					fetchData={apiOperations}
-				/>
+					getOperation={getOperation}
+				/>}
+
 			</div>
 
 			{showOperationForm && (

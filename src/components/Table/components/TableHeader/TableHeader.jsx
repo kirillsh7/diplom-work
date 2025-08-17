@@ -1,8 +1,9 @@
-export const TableHeader = ({ heading }) => {
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai"
+export const TableHeader = ({ heading, handleSort, sortBy }) => {
 	return (
 		<thead>
 			<tr>
-				{heading.map(({ name }, index) => (
+				{heading.map(({ name, key }, index) => (
 					<th
 						key={index}
 						style={{
@@ -10,8 +11,16 @@ export const TableHeader = ({ heading }) => {
 							textAlign: 'left',
 							borderBottom: '1px solid #ddd',
 						}}
+						onClick={() => handleSort(key)}
 					>
 						{name}
+						{
+							sortBy.key === key
+								? sortBy.order === 'asc'
+									? <AiFillCaretUp />
+									: <AiFillCaretDown />
+								: null
+						}
 					</th>
 				))}
 			</tr>

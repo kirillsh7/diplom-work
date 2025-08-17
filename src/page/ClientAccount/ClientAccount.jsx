@@ -44,18 +44,21 @@ export const ClientAccount = () => {
 		{ name: 'Сумма', type: 'number', key: 'amount' },
 		{ name: 'Дата', type: 'date', key: 'date', controls: 'delete' },
 	]
+	const fetchAccount = async () => {
+		try {
+			const res = await apiClientAccount.GET(user)
+			if (res.error) throw new Error(res.error)
+			setAccounts(res)
+			setLoading(false)
+		}
+		catch (e) {
+			setError(e.message)
+			setLoading(false)
+		}
+	}
 	useEffect(() => {
-		apiClientAccount
-			.GET(user)
-			.then(res => {
-				if (res.error) throw new Error(res.error)
-				setAccounts(res)
-			})
-			.catch(e => {
-				setError(e.message)
-				setLoading(false)
-			})
-			.finally(() => setLoading(false))
+		fetchAccount()
+
 	}, [])
 
 	if (error) return <p>{error}</p>
@@ -90,6 +93,7 @@ export const ClientAccount = () => {
 						heading={heading}
 						operations={accounts}
 						fetchData={apiClientAccount}
+						changeOperation={fetchAccount}
 					/>
 				)}
 			</div>

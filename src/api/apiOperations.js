@@ -38,7 +38,7 @@ export const apiOperations = {
 			return { error: e }
 		}
 	},
-	PATH: async (id, data) => {
+	PATCH: async (id, data) => {
 		try {
 			const response = await fetch(`${URL}/${id}`, {
 				method: 'PATCH',

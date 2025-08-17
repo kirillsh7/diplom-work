@@ -38,7 +38,7 @@ createRoot(document.getElementById('root')).render(
 						<Route path='/register' element={<Register />} />
 					</Route>
 
-					<Route path='*' element={<p>Error</p>} />
+					<Route path='*' element={<p style={{ textAlign: 'center', marginTop: '50px', fontSize: '24px' }}>Старница не найдена</p>} />
 				</Routes>
 			</Provider>
 		</BrowserRouter>

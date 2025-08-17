@@ -25,6 +25,7 @@ export const apiClientAccount = {
 			return transformClientAcount(newData)
 		} catch (e) {
 			console.log(e)
+			return { error: e }
 		}
 	},
 	PATCH: async (id, data) => {
@@ -41,6 +42,7 @@ export const apiClientAccount = {
 			return newData
 		} catch (e) {
 			console.log(e)
+			return { error: e }
 		}
 	},
 	DELETE: async id => {
@@ -49,9 +51,9 @@ export const apiClientAccount = {
 				method: 'DELETE',
 			})
 			if (!response.ok) throw new Error(response.statusText)
-			return id
+			return { id, error: null }
 		} catch (e) {
-			console.log(e)
+			return { id, error: e }
 		}
 	},
 }

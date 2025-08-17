@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiOperations, apiCategory, apiClientAccount } from '@api'
-import { generateDate } from '@utils'
+import { CATEGORY } from '@constants'
+import { generateDate, calculateNewAccountBalance } from '@utils'
 import { useChangeInput } from '@hooks'
 import styled from '../../operation.module.css'
+
 export const OperationForm = ({ getOperation, closeOperationForm, user }) => {
 	const [newOperation, setNewOperation] = useState({
 		category: {},
@@ -15,19 +17,19 @@ export const OperationForm = ({ getOperation, closeOperationForm, user }) => {
 	const [categories, setCategories] = useState([])
 	const [accounts, setAccounts] = useState([])
 	const handleInput = useChangeInput(setNewOperation)
-	const changeAmountAccount = () => {
-		const categoryType = categories.find(
-			category => category.id === newOperation.category
-		)?.type
-		const accountAmount = accounts.find(
-			account => account.id === newOperation.client_account
-		)?.amount
-		const newAmount = categoryType
-			? Number(accountAmount) + Number(newOperation.amount)
-			: Number(accountAmount) - Number(newOperation.amount)
-		apiClientAccount.PATCH(newOperation.client_account, {
-			amount: newAmount,
-		})
+	const [error, setError] = useState(null)
+	const changeAmountAccount = async (data) => {
+		try {
+
+			const { category, amount, client_account } = data
+			if (category.type === CATEGORY.EXPENSES && client_account.amount < amount) throw new Error('Недостаточно средств')
+
+			const newAmount = calculateNewAccountBalance(category.type, client_account.amount, amount)
+			const newData = await apiClientAccount.PATCH(client_account.id, { ...client_account, amount: newAmount })
+			return newData
+		} catch (e) {
+			setError(e.message)
+		}
 	}
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -42,17 +44,18 @@ export const OperationForm = ({ getOperation, closeOperationForm, user }) => {
 				client_account: accounts.find(
 					account => account.id === newOperation.client_account
 				),
-				user: user,
+				user,
 			}
-			// changeAmountAccount()
-			apiOperations
-				.POST(data)
-				.then(() => {
-					closeOperationForm()
-					setNewOperation({})
-					getOperation()
-				})
-				.catch(e => console.log(e))
+
+			const newCientAccount = await changeAmountAccount(data)
+
+			data.client_account = newCientAccount
+
+			await apiOperations.POST(data)
+
+			closeOperationForm()
+			setNewOperation({})
+			getOperation()
 		} catch (e) {
 			console.log(e)
 		}
@@ -61,8 +64,8 @@ export const OperationForm = ({ getOperation, closeOperationForm, user }) => {
 		const fetchData = async () => {
 			try {
 				const [categories, accounts] = await Promise.all([
-					apiCategory.GET(),
-					apiClientAccount.GET(),
+					apiCategory.GET(user),
+					apiClientAccount.GET(user),
 				])
 				setCategories(categories)
 				setAccounts(accounts)
@@ -152,9 +155,9 @@ export const OperationForm = ({ getOperation, closeOperationForm, user }) => {
 						placeholder='Комментарий (необязательно)'
 						value={newOperation.comment}
 						onChange={handleInput}
-						required
-					/>
 
+					/>
+					{error && <p style={{ color: 'red' }}>{error}</p>}
 					<button type='submit'>Создать операцию</button>
 				</form>
 			</div>

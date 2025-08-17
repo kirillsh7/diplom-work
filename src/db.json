@@ -2,9 +2,17 @@
   "users": [
     {
       "id": "9e0a",
+      "login": "andrei@mail.ru",
+      "password": "qwer1234",
+      "registered_at": "17 сентебря 2025 в 12:18",
+      "registeredAt": "17 сентебря 2025 в 12:18"
+    },
+    {
       "login": "kirill@mail.ru",
       "password": "qwer1234",
-      "registered_at": "2050-09-17 12:18"
+      "registered_at": "10 января 2040 года в 07:00",
+      "id": "VSDigAb",
+      "registeredAt": "10 января 2040 года в 07:00"
     }
   ],
   "category": [
@@ -12,37 +20,37 @@
       "id": "8f41",
       "name": "Поход в магазин",
       "type": 0,
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "35e7",
       "name": "Зарплата",
       "type": 1,
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "e4f0",
       "name": "Покупка",
       "type": 0,
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "e1b7",
       "name": "Подработка",
       "type": 1,
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "bf06",
       "name": "Долг",
       "type": 0,
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "e805",
       "name": "Возврат долга",
       "type": 1,
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     }
   ],
   "client-account": [
@@ -50,287 +58,329 @@
       "id": "f273",
       "name": "Тинькофф",
       "type": "кредитная карта ",
-      "amount": 21390129,
+      "amount": 21340253,
       "created_date": "2025-08-10",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb",
+      "date": "2025-08-10"
     },
     {
       "id": "1271",
       "name": "СберБанк",
       "type": "кредитная карта ",
-      "amount": 10000000,
+      "amount": 9741124,
       "created_date": "2025-08-10",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb",
+      "date": "2025-08-10"
     },
     {
       "id": "7596",
       "name": "Наличные",
       "type": "наличка",
-      "amount": 50000,
+      "amount": 90000,
       "created_date": "2025-08-10",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb",
+      "date": "2025-08-10"
+    },
+    {
+      "name": "1",
+      "type": "1",
+      "amount": 100000,
+      "created_date": "2025-08-17",
+      "user": "VSDigAb",
+      "id": "GkRKHQX"
+    },
+    {
+      "name": "2",
+      "type": "2",
+      "amount": 30000,
+      "created_date": "2025-08-17",
+      "user": "VSDigAb",
+      "id": "54Rf3eh",
+      "date": "2025-08-17"
     }
   ],
   "operation-client": [
     {
       "id": "e5f6",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "e4f0",
+        "name": "Покупка",
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": -21390129,
-        "date": "2025-08-10"
+        "id": "7596",
+        "name": "Наличные",
+        "type": "наличка",
+        "amount": 50000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "111",
       "amount": "15678",
       "comment": "11",
       "created_date": "2025.07.03",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "g7h8",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "bf06",
+        "name": "Долг",
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
+        "id": "1271",
+        "name": "СберБанк",
         "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
+        "amount": 10000000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "",
       "amount": "42345",
       "comment": "",
       "created_date": "2025.07.04",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "i9j0",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "e805",
+        "name": "Возврат долга",
+        "type": 1,
+        "user": "VSDigAb"
       },
       "client_account": {
         "id": "f273",
         "name": "Тинькофф",
         "type": "кредитная карта ",
         "amount": 21390129,
-        "date": "2025-08-10"
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "",
       "amount": "31234",
       "comment": "",
       "created_date": "2025.07.05",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "k1l2",
       "category": {
         "id": "8f41",
         "name": "Поход в магазин",
-        "type": 0
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": -10111,
-        "date": "2025-08-10"
+        "id": "7596",
+        "name": "Наличные",
+        "type": "наличка",
+        "amount": 50000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "kirillelectic",
       "amount": "49876",
       "comment": "11111",
       "created_date": "2025.07.06",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "m3n4",
       "category": {
-        "id": "e1b7",
-        "name": "Подработка",
-        "type": 1
+        "id": "e4f0",
+        "name": "Покупка",
+        "type": 0
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
+        "id": "1271",
+        "name": "СберБанк",
         "type": "кредитная карта ",
-        "amount": -20111,
+        "amount": 10000000,
         "date": "2025-08-10"
       },
       "name": "esdvs",
       "amount": "26543",
       "comment": "afsdfd",
       "created_date": "2025.07.07",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "o5p6",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "e4f0",
+        "name": "Покупка",
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
         "id": "f273",
         "name": "Тинькофф",
         "type": "кредитная карта ",
-        "amount": -21390129,
-        "date": "2025-08-10"
+        "amount": 21390129,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "111",
       "amount": "41234",
       "comment": "11",
       "created_date": "2025.07.08",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "q7r8",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "bf06",
+        "name": "Долг",
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
+        "id": "7596",
+        "name": "Наличные",
+        "type": "наличка",
+        "amount": 50000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "",
       "amount": "35678",
       "comment": "",
       "created_date": "2025.07.09",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "s9t0",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "e805",
+        "name": "Возврат долга",
+        "type": 1,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
+        "id": "1271",
+        "name": "СберБанк",
         "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
+        "amount": 10000000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "",
       "amount": "48765",
       "comment": "",
       "created_date": "2025.07.10",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "u1v2",
       "category": {
         "id": "8f41",
         "name": "Поход в магазин",
-        "type": 0
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
         "id": "f273",
         "name": "Тинькофф",
         "type": "кредитная карта ",
-        "amount": -10111,
-        "date": "2025-08-10"
+        "amount": 21390129,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "kirillelectic",
       "amount": "23456",
       "comment": "11111",
       "created_date": "2025.07.11",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "w3x4",
       "category": {
         "id": "e1b7",
         "name": "Подработка",
-        "type": 1
+        "type": 1,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": -20111,
-        "date": "2025-08-10"
+        "id": "7596",
+        "name": "Наличные",
+        "type": "наличка",
+        "amount": 50000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "esdvs",
       "amount": "45678",
       "comment": "afsdfd",
       "created_date": "2025.07.12",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "y5z6",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
+        "id": "e4f0",
+        "name": "Покупка",
         "type": 0
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
+        "id": "1271",
+        "name": "СберБанк",
         "type": "кредитная карта ",
-        "amount": -21390129,
+        "amount": 9741124,
         "date": "2025-08-10"
       },
       "name": "111",
       "amount": "32123",
       "comment": "11",
       "created_date": "2025.07.13",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "a7b8",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "bf06",
+        "name": "Долг",
+        "type": 0,
+        "user": "VSDigAb"
       },
       "client_account": {
         "id": "f273",
         "name": "Тинькофф",
         "type": "кредитная карта ",
         "amount": 21390129,
-        "date": "2025-08-10"
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "",
       "amount": "41234",
       "comment": "",
       "created_date": "2025.07.14",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "c9d0",
       "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
+        "id": "e805",
+        "name": "Возврат долга",
+        "type": 1,
+        "user": "VSDigAb"
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
+        "id": "7596",
+        "name": "Наличные",
+        "type": "наличка",
+        "amount": 50000,
+        "created_date": "2025-08-10",
+        "user": "VSDigAb"
       },
       "name": "",
       "amount": "37654",
       "comment": "",
       "created_date": "2025.07.15",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
       "id": "e1f2",
@@ -340,117 +390,57 @@
         "type": 0
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
+        "id": "1271",
+        "name": "СберБанк",
         "type": "кредитная карта ",
-        "amount": -10111,
+        "amount": 9741124,
         "date": "2025-08-10"
       },
       "name": "kirillelectic",
-      "amount": "28765",
+      "amount": "28764",
       "comment": "11111",
       "created_date": "2025.07.16",
-      "user": "kirill@mail.ru"
+      "user": "VSDigAb"
     },
     {
-      "id": "g3h4",
       "category": {
         "id": "e1b7",
         "name": "Подработка",
         "type": 1
       },
       "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": -20111,
-        "date": "2025-08-10"
-      },
-      "name": "esdvs",
-      "amount": "49876",
-      "comment": "afsdfd",
-      "created_date": "2025.07.17",
-      "user": "kirill@mail.ru"
-    },
-    {
-      "id": "k7l8",
-      "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
-      },
-      "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
-      },
-      "name": "",
-      "amount": "43210",
-      "comment": "",
-      "created_date": "2025.07.19",
-      "user": "kirill@mail.ru"
-    },
-    {
-      "id": "m9n0",
-      "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
-      },
-      "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
-      },
-      "name": "",
-      "amount": "25678",
-      "comment": "",
-      "created_date": "2025.07.20",
-      "user": "kirill@mail.ru"
-    },
-    {
-      "id": "m9n02",
-      "category": {
-        "id": "8f41",
-        "name": "Поход в магазин",
-        "type": 0
-      },
-      "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": 21390129,
-        "date": "2025-08-10"
-      },
-      "name": "",
-      "amount": "25678",
-      "comment": "",
-      "created_date": "2025.07.20",
-      "user": "kirill@mail.ru"
-    },
-    {
-      "id": "954b",
-      "category": {
-        "id": "35e7",
-        "name": "Зарплата",
-        "type": 1
-      },
-      "client_account": {
-        "id": "f273",
-        "name": "Тинькофф",
-        "type": "кредитная карта ",
-        "amount": 21390129,
+        "id": "7596",
+        "name": "Наличные",
+        "type": "наличка",
+        "amount": 90000,
         "date": "2025-08-10"
       },
       "name": "1",
-      "amount": "11111",
-      "comment": "rrgedgdf",
-      "created_date": "2044.10.15",
-      "user": "kirill@mail.ru"
+      "amount": "30000",
+      "comment": "",
+      "created_date": "16 октября 2062 года в 05:21",
+      "user": "VSDigAb",
+      "id": "xpqS1bY"
+    },
+    {
+      "category": {
+        "id": "e1b7",
+        "name": "Подработка",
+        "type": 1
+      },
+      "client_account": {
+        "id": "54Rf3eh",
+        "name": "2",
+        "type": "2",
+        "amount": 30000,
+        "date": "2025-08-17"
+      },
+      "name": "1",
+      "amount": "10000",
+      "comment": "",
+      "created_date": "30 июня 2045 года в 06:13",
+      "user": "VSDigAb",
+      "id": "F1JopH5"
     }
   ]
 }

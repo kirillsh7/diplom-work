@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "db": "json-server -w src/db.json --port=3005",
     "preview": "vite preview"
   },
   "dependencies": {

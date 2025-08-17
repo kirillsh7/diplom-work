@@ -1,11 +1,12 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { authUser, updateUserLogin } from '@store/Slice/auth/authSlice'
+import { useChangeInput } from '@hooks'
+import { server } from '../../bff'
 import * as yup from 'yup'
 import styled from './register.module.css'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { authUser } from '@store/Slice/auth/authSlice'
-import { useNavigate } from 'react-router-dom'
-import { useChangeInput } from '../../hooks/useChangeInput'
-import { server } from '../../bff'
+import { createErrorMessage } from '@utils'
 
 const registerSchema = yup.object().shape({
 	login: yup
@@ -59,7 +60,7 @@ export const Register = () => {
 					setErrorServer(error)
 					setIsLoading(false)
 					if (error) return
-					dispatch(authUser(res.login))
+					dispatch(authUser({ id: res.id, login: res.login }))
 					navigate('/')
 				})
 				.catch(err => {
@@ -67,20 +68,7 @@ export const Register = () => {
 					setErrorServer(err)
 				})
 		} catch (err) {
-			const { inner } = err
-
-			const errors = Array.isArray(inner)
-				? inner.reduce((acc, item) => {
-						const { path, errors } = item
-
-						if (!acc.hasOwnProperty(path) && errors.length) {
-							acc[path] = errors[0]
-						}
-						return acc
-				  }, {})
-				: {}
-
-			setError(errors)
+			setError(createErrorMessage(err))
 			setIsLoading(false)
 		}
 	}

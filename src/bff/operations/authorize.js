@@ -2,6 +2,8 @@ import { getUser } from '../api'
 import { sessions } from '../sessions'
 export const authorize = async (authLogin, authPassword) => {
 	const user = await getUser(authLogin)
+
+	if (user.error) return { error: user.error, res: null, }
 	if (!user) {
 		return {
 			error: 'Пользователь не найден',
